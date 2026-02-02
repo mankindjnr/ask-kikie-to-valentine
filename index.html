@@ -92,29 +92,29 @@
   <div class="heart-float" style="top: 50%; left: 5%; animation-delay: 0.5s;">💓</div>
   <div class="heart-float" style="top: 40%; right: 8%; animation-delay: 2.5s;">💞</div>
 
-  <div class="flex items-center justify-center min-h-screen py-8 px-4">
-    <div class="flex flex-col items-center max-w-2xl w-full">
-      <div class="image-container mb-6">
+  <div class="flex items-center justify-center h-screen py-4 px-4">
+    <div class="flex flex-col items-center justify-center max-w-2xl w-full h-full">
+      <div class="image-container mb-3 flex-shrink-0">
         <img id="imageDisplay" src="./images/image1.gif" alt="For my special Valentine" 
-             class="h-[350px] w-auto object-cover" />
+             class="h-[200px] sm:h-[250px] md:h-[280px] w-auto object-cover" />
       </div>
       
-      <h2 id="valentineQuestion" class="title-font text-5xl md:text-6xl text-[#bd1e59] mb-6 text-center px-4 transition-all duration-500">
+      <h2 id="valentineQuestion" class="title-font text-3xl sm:text-4xl md:text-5xl text-[#bd1e59] mb-3 text-center px-4 transition-all duration-500 flex-shrink-0">
         Kikie, Will you be my Valentine? 💝
       </h2>
       
-      <div class="flex gap-6 items-center" id="responseButtons">
+      <div class="flex gap-4 sm:gap-6 items-center flex-shrink-0" id="responseButtons">
         <button id="yesButton"
-          class="bounce-yes pulse-glow inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-[22px] font-bold disabled:pointer-events-none disabled:opacity-50 hover:bg-[#ff1493] hover:scale-105 min-h-14 min-w-[90px] px-6 py-3 bg-[#ff69b4] text-white transition-all duration-300 shadow-lg">
+          class="bounce-yes pulse-glow inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-[18px] sm:text-[22px] font-bold disabled:pointer-events-none disabled:opacity-50 hover:bg-[#ff1493] hover:scale-105 min-h-12 sm:min-h-14 min-w-[80px] sm:min-w-[90px] px-4 sm:px-6 py-2 sm:py-3 bg-[#ff69b4] text-white transition-all duration-300 shadow-lg">
           Yes! 💖
         </button>
         <button id="noButton"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-[22px] font-bold transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 hover:bg-[#dc143c] h-14 min-w-[90px] px-6 py-3 bg-[#ff4757] text-white shadow-lg">
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-[18px] sm:text-[22px] font-bold transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 hover:bg-[#dc143c] h-12 sm:h-14 min-w-[80px] sm:min-w-[90px] px-4 sm:px-6 py-2 sm:py-3 bg-[#ff4757] text-white shadow-lg">
           No
         </button>
       </div>
 
-      <p id="subText" class="mt-6 text-[#bd1e59] text-lg font-semibold text-center px-4 min-h-[30px] transition-opacity duration-500">
+      <p id="subText" class="mt-3 text-[#bd1e59] text-base sm:text-lg font-semibold text-center px-4 min-h-[25px] transition-opacity duration-500 flex-shrink-0">
         Choose wisely... 😉
       </p>
     </div>
@@ -131,9 +131,9 @@
     const subText = document.getElementById('subText');
   
     let noClickCount = 0;
-    let buttonHeight = 56;
-    let buttonWidth = 90;
-    let fontSize = 22;
+    let buttonHeight = 48;
+    let buttonWidth = 80;
+    let fontSize = 18;
     
     const imagePaths = [
       "./images/image1.gif",
@@ -205,9 +205,9 @@
         imageDisplay.src = imagePaths[imageIndex];
         
         // Grow the Yes button
-        buttonHeight += 25;
-        buttonWidth += 25;
-        fontSize += 15;
+        buttonHeight += 20;
+        buttonWidth += 20;
+        fontSize += 12;
         yesButton.style.height = `${buttonHeight}px`;
         yesButton.style.width = `${buttonWidth}px`;
         yesButton.style.fontSize = `${fontSize}px`;
@@ -230,9 +230,9 @@
         
         // Shrink the No button gradually
         if (noClickCount > 3) {
-          const newNoSize = Math.max(40, 56 - (noClickCount - 3) * 4);
+          const newNoSize = Math.max(35, 48 - (noClickCount - 3) * 3);
           noButton.style.height = `${newNoSize}px`;
-          noButton.style.fontSize = `${Math.max(12, 22 - (noClickCount - 3) * 2)}px`;
+          noButton.style.fontSize = `${Math.max(10, 18 - (noClickCount - 3) * 2)}px`;
         }
       }
     });
