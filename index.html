@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Kikie 💕</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Quicksand', sans-serif;
+    }
+    
+    .gradient-background {
+      background: linear-gradient(135deg, #ffeef8 0%, #ffe4f1 25%, #ffd4e8 50%, #ffc9e3 75%, #ffb8dd 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .heart-float {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.6;
+      animation: floatHeart 4s ease-in-out infinite;
+    }
+
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+      50% { transform: translateY(-30px) rotate(10deg); opacity: 0.9; }
+    }
+
+    .bounce-yes {
+      animation: bounceYes 1.5s ease infinite;
+    }
+
+    @keyframes bounceYes {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+      40% { transform: translateY(-25px) scale(1.05); }
+      60% { transform: translateY(-12px) scale(1.02); }
+    }
+
+    .shake-no {
+      animation: shakeNo 0.5s ease;
+    }
+
+    @keyframes shakeNo {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px) rotate(-5deg); }
+      75% { transform: translateX(8px) rotate(5deg); }
+    }
+
+    .title-font {
+      font-family: 'Pacifico', cursive;
+      text-shadow: 3px 3px 6px rgba(189, 30, 89, 0.3);
+    }
+
+    .image-container {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(189, 30, 89, 0.25);
+      border: 4px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.6); }
+      50% { box-shadow: 0 0 40px rgba(255, 105, 180, 0.9); }
+    }
+
+    .confetti-burst {
+      position: fixed;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="gradient-background min-h-screen overflow-hidden">
+  <!-- Floating hearts background -->
+  <div class="heart-float" style="top: 10%; left: 15%;">💖</div>
+  <div class="heart-float" style="top: 20%; right: 20%; animation-delay: 1s;">💕</div>
+  <div class="heart-float" style="bottom: 15%; left: 25%; animation-delay: 2s;">💗</div>
+  <div class="heart-float" style="bottom: 25%; right: 15%; animation-delay: 1.5s;">💝</div>
+  <div class="heart-float" style="top: 50%; left: 5%; animation-delay: 0.5s;">💓</div>
+  <div class="heart-float" style="top: 40%; right: 8%; animation-delay: 2.5s;">💞</div>
+
+  <div class="flex items-center justify-center min-h-screen py-8 px-4">
+    <div class="flex flex-col items-center max-w-2xl w-full">
+      <div class="image-container mb-6">
+        <img id="imageDisplay" src="./images/image1.gif" alt="For my special Valentine" 
+             class="h-[350px] w-auto object-cover" />
+      </div>
+      
+      <h2 id="valentineQuestion" class="title-font text-5xl md:text-6xl text-[#bd1e59] mb-6 text-center px-4 transition-all duration-500">
+        Kikie, Will you be my Valentine? 💝
+      </h2>
+      
+      <div class="flex gap-6 items-center" id="responseButtons">
+        <button id="yesButton"
+          class="bounce-yes pulse-glow inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-[22px] font-bold disabled:pointer-events-none disabled:opacity-50 hover:bg-[#ff1493] hover:scale-105 min-h-14 min-w-[90px] px-6 py-3 bg-[#ff69b4] text-white transition-all duration-300 shadow-lg">
+          Yes! 💖
+        </button>
+        <button id="noButton"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-[22px] font-bold transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 hover:bg-[#dc143c] h-14 min-w-[90px] px-6 py-3 bg-[#ff4757] text-white shadow-lg">
+          No
+        </button>
+      </div>
+
+      <p id="subText" class="mt-6 text-[#bd1e59] text-lg font-semibold text-center px-4 min-h-[30px] transition-opacity duration-500">
+        Choose wisely... 😉
+      </p>
+    </div>
+  </div>
+
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const imageDisplay = document.getElementById('imageDisplay');
+    const valentineQuestion = document.getElementById('valentineQuestion');
+    const responseButtons = document.getElementById('responseButtons');
+    const subText = document.getElementById('subText');
+  
+    let noClickCount = 0;
+    let buttonHeight = 56;
+    let buttonWidth = 90;
+    let fontSize = 22;
+    
+    const imagePaths = [
+      "./images/image1.gif",
+      "./images/image2.gif",
+      "./images/image3.gif",
+      "./images/image4.gif",
+      "./images/image5.gif",
+      "./images/image6.gif",
+      "./images/image7.gif"
+    ];
+
+    // Phrases that appear as the question text
+    const questionPhrases = [
+      "Kikie, Will you be my Valentine? 💝",
+      "Come on Kikie, you know you want to say yes... 🥺",
+      "Kikie please! Think of how happy we'll be! 💕",
+      "Baby, why are you doing this to me? 😢",
+      "Kikie... my heart can't take much more... 💔",
+      "I'm literally on my knees here Kikie! 🙏",
+      "This is your last chance to save my heart, Kikie! 💗",
+      "Kikie... one yes could change everything... ✨",
+      "I know you're smiling right now Kikie... just say yes! 😊",
+      "Fine, I'll ask one more time... Kikie, be mine? 🌹"
+    ];
+
+    // Phrases for the No button
+    const noButtonTexts = [
+      "No",
+      "Are you sure? 🤔",
+      "Really? 😮",
+      "Think again... 💭",
+      "Kikie please... 🥺",
+      "Don't do this 😢",
+      "My heart... 💔",
+      "Reconsider? 🙏",
+      "One more chance? 🌟",
+      "Pretty please? 🎀",
+      "With a cherry on top? 🍒",
+      "I'm begging you... 😭",
+      "You're killing me 💔",
+      "Last chance! ⚠️",
+      "Seriously?? 😱"
+    ];
+
+    // Subtext messages
+    const subTextMessages = [
+      "Choose wisely... 😉",
+      "The answer is obvious, right? 💕",
+      "Hint: The bigger button is calling your name... 💖",
+      "I know what you're thinking... just say it! 🥰",
+      "Your finger is hovering over the right one... 😏",
+      "Don't even think about that other button! 😤",
+      "Kikie, you're stalling... 🙈",
+      "The suspense is killing me! 💗",
+      "I already know you'll say yes... 😌",
+      "Make me the happiest person alive! 🌟"
+    ];
+
+    noButton.addEventListener('click', function() {
+      // Add shake animation
+      noButton.classList.add('shake-no');
+      setTimeout(() => noButton.classList.remove('shake-no'), 500);
+
+      if (noClickCount < 14) {
+        noClickCount++;
+        
+        // Cycle through images (loop back if we run out)
+        const imageIndex = noClickCount % imagePaths.length;
+        imageDisplay.src = imagePaths[imageIndex];
+        
+        // Grow the Yes button
+        buttonHeight += 25;
+        buttonWidth += 25;
+        fontSize += 15;
+        yesButton.style.height = `${buttonHeight}px`;
+        yesButton.style.width = `${buttonWidth}px`;
+        yesButton.style.fontSize = `${fontSize}px`;
+        
+        // Update No button text
+        const noTextIndex = Math.min(noClickCount, noButtonTexts.length - 1);
+        noButton.textContent = noButtonTexts[noTextIndex];
+        
+        // Update question text
+        const questionIndex = Math.min(noClickCount, questionPhrases.length - 1);
+        valentineQuestion.textContent = questionPhrases[questionIndex];
+        
+        // Update subtext
+        const subTextIndex = Math.min(noClickCount, subTextMessages.length - 1);
+        subText.style.opacity = '0';
+        setTimeout(() => {
+          subText.textContent = subTextMessages[subTextIndex];
+          subText.style.opacity = '1';
+        }, 250);
+        
+        // Shrink the No button gradually
+        if (noClickCount > 3) {
+          const newNoSize = Math.max(40, 56 - (noClickCount - 3) * 4);
+          noButton.style.height = `${newNoSize}px`;
+          noButton.style.fontSize = `${Math.max(12, 22 - (noClickCount - 3) * 2)}px`;
+        }
+      }
+    });
+  
+    yesButton.addEventListener('click', () => {
+      // Change to celebration gif
+      imageDisplay.src = './images/image7.gif';
+      
+      // Update text
+      valentineQuestion.textContent = "YAYYY!!! You made me so happy! 🥳💕✨";
+      valentineQuestion.classList.add('title-font');
+      subText.textContent = "This is the best day ever! 😊💖";
+      
+      // Hide buttons
+      responseButtons.style.opacity = '0';
+      setTimeout(() => {
+        responseButtons.style.display = 'none';
+      }, 500);
+      
+      // Epic confetti celebration
+      const duration = 4 * 1000;
+      const end = Date.now() + duration;
+
+      const colors = ['#ff69b4', '#ff1493', '#ff80ab', '#f50057', '#c51162'];
+
+      (function frame() {
+        confetti({
+          particleCount: 7,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors
+        });
+        confetti({
+          particleCount: 7,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+
+      // Add hearts explosion
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          spread: 160,
+          origin: { y: 0.6 },
+          colors: colors,
+          shapes: ['circle'],
+          gravity: 0.5,
+          scalar: 2
+        });
+      }, 500);
+    });
+  </script>  
+</body>
+</html>
